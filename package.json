@@ -1,43 +1,19 @@
 {
-  "name": "personal-finance-tracker-api",
+  "name": "capstone-finance-tracker",
   "version": "1.0.0",
-  "description": "A robust Personal Finance Tracker REST API with Auth, Transactions, File Uploads, Analytics, and Swagger Docs",
-  "main": "src/server.js",
-  "type": "module",
+  "description": "Personal Finance Tracker - Full Stack Web Application",
+  "private": true,
   "scripts": {
-    "start": "node src/server.js",
-    "dev": "nodemon src/server.js",
-    "test": "node tests/test-api.js"
-  },
-  "keywords": [
-    "finance",
-    "tracker",
-    "express",
-    "nodejs",
-    "mongodb",
-    "jwt",
-    "swagger",
-    "zod"
-  ],
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "bcryptjs": "^2.4.3",
-    "cloudinary": "^2.5.1",
-    "cors": "^2.8.5",
-    "dotenv": "^16.4.7",
-    "express": "^4.21.2",
-    "express-rate-limit": "^7.5.0",
-    "helmet": "^8.0.0",
-    "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.9.5",
-    "morgan": "^1.10.0",
-    "multer": "^1.4.5-lts.1",
-    "swagger-ui-express": "^5.0.1",
-    "zod": "^3.24.1"
+    "dev": "concurrently -n \"BACKEND,FRONTEND\" -c \"cyan,magenta\" \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "dev:backend": "npm run dev --prefix backend",
+    "dev:frontend": "npm run dev --prefix frontend",
+    "start": "npm start --prefix backend",
+    "start:backend": "npm start --prefix backend",
+    "build:frontend": "npm run build --prefix frontend",
+    "test:backend": "npm test --prefix backend",
+    "install:all": "npm install && npm install --prefix backend && npm install --prefix frontend"
   },
   "devDependencies": {
-    "mongodb-memory-server": "^11.2.0",
-    "nodemon": "^3.1.9"
+    "concurrently": "^10.0.5"
   }
 }

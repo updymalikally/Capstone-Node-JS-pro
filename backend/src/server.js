@@ -2,6 +2,7 @@ import 'dotenv/config';
 import app from './app.js';
 import { connectDB } from './config/db.js';
 import { seedDefaultCategoriesIfEmpty } from './controllers/category.controller.js';
+import { seedDefaultUsersIfEmpty } from './controllers/auth.controller.js';
 
 const PORT = process.env.PORT || 5000;
 
@@ -10,11 +11,12 @@ const startServer = async () => {
     // Connect to MongoDB Atlas
     await connectDB();
 
-    // Auto-seed default categories if not already populated
+    // Auto-seed default categories and demo accounts if not already populated
     await seedDefaultCategoriesIfEmpty();
+    await seedDefaultUsersIfEmpty();
 
-    // Start listening
-    const server = app.listen(PORT, () => {
+    // Start listening on all network interfaces
+    const server = app.listen(PORT, '0.0.0.0', () => {
       console.log(`====================================================`);
       console.log(`🚀 Personal Finance Tracker API running on port ${PORT}`);
       console.log(`📖 Swagger API Docs: http://localhost:${PORT}/docs`);

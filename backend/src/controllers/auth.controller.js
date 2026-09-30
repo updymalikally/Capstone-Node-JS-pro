@@ -1,6 +1,39 @@
 import User from '../models/user.model.js';
 
 /**
+ * Helper to seed default demo accounts if not already in DB
+ */
+export const seedDefaultUsersIfEmpty = async () => {
+  try {
+    const demoUser = await User.findOne({ email: 'demo@example.com' });
+    if (!demoUser) {
+      await User.create({
+        name: 'Demo User',
+        email: 'demo@example.com',
+        password: 'password123',
+        role: 'user',
+        currency: 'USD',
+      });
+      console.log('[Auth] Seeded standard demo user: demo@example.com');
+    }
+
+    const adminUser = await User.findOne({ email: 'admin@example.com' });
+    if (!adminUser) {
+      await User.create({
+        name: 'Admin User',
+        email: 'admin@example.com',
+        password: 'admin123',
+        role: 'admin',
+        currency: 'USD',
+      });
+      console.log('[Auth] Seeded admin user: admin@example.com');
+    }
+  } catch (error) {
+    console.warn('[Auth] Seeding note:', error.message);
+  }
+};
+
+/**
  * @desc    Register new user
  * @route   POST /auth/register
  * @access  Public
@@ -113,7 +146,15 @@ export const getProfile = async (req, res, next) => {
     const user = await User.findById(req.user.id);
     res.status(200).json({
       success: true,
-      data: user,
+      data: {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+        profilePicture: user.profilePicture,
+        currency: user.currency,
+        createdAt: user.createdAt,
+      },
     });
   } catch (error) {
     next(error);
@@ -141,7 +182,15 @@ export const updateProfile = async (req, res, next) => {
     res.status(200).json({
       success: true,
       message: 'Profile updated successfully',
-      data: updatedUser,
+      data: {
+        id: updatedUser._id,
+        name: updatedUser.name,
+        email: updatedUser.email,
+        role: updatedUser.role,
+        profilePicture: updatedUser.profilePicture,
+        currency: updatedUser.currency,
+        createdAt: updatedUser.createdAt,
+      },
     });
   } catch (error) {
     next(error);

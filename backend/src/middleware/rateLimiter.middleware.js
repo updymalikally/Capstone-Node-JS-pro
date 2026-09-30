@@ -1,25 +1,30 @@
 import rateLimit from 'express-rate-limit';
 
-// General API rate limiter: 200 requests per 15 minutes
+const isDev = process.env.NODE_ENV !== 'production';
+
+// General API rate limiter: 500 requests per 15 minutes (or 2000 in dev)
 export const apiLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
-  max: 200,
+  max: isDev ? 2000 : 500,
   standardHeaders: true,
   legacyHeaders: false,
+  skip: () => isDev,
   message: {
     success: false,
     message: 'Too many requests from this IP, please try again after 15 minutes.',
   },
 });
 
-// Stricter limiter for authentication routes: 20 requests per 15 minutes
+// Limiter for authentication routes (generous in dev)
 export const authLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
-  max: 30,
+  max: isDev ? 1000 : 100,
   standardHeaders: true,
   legacyHeaders: false,
+  skip: () => isDev,
   message: {
     success: false,
     message: 'Too many authentication attempts from this IP, please try again after 15 minutes.',
   },
 });
+
