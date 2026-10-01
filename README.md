@@ -80,8 +80,8 @@ npm run install:all
 npm run dev
 ```
 
-* **Frontend**: [http://localhost:3000](http://localhost:3000)
-* **Backend API**: [http://localhost:5000](http://localhost:5000)
+* **Frontend**: [http://localhost:3000](https://capstone-finance-frontend.onrender.com/)
+* **Backend API**: [http://localhost:5000](https://capstone-finance-api.onrender.com/)
 * **Swagger API Docs**: [http://localhost:5000/docs](http://localhost:5000/docs)
 
 ---
